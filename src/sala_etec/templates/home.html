@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Início</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"
+        />
+    </head>
+    <body>
+        <nav class="navbar" role="navigation" aria-label="aria navigation">
+            <div class="navbar-start">
+                <div class="navbar-item">
+                    <a href="#" class="title is-link is-primary">Sala ETEC</a>
+                </div>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-primary" href="#">{{ user }}</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="columns">
+            <div class="column is-one-fifth">
+                <div class="menu-aside">
+                    <aside class="menu">
+                        <ul class="menu-list">
+                            <li><a href="#">Início</a></li>
+                            <li><a href="#">Disciplinas</a></li>
+                            <li><a href="#">Materiais</a></li>
+                            <li><a href="#">Atividades</a></li>
+                            <li><a href="#">Favoritos</a></li>
+                            <li><a href="#">Progresso</a></li>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+            <div class="column">
+                <section class="section">
+                    <h1 class="title">Olá, {{ user }}</h1>
+                    <h2 class="subtitle">Continue seus estudos</h2>
+                </section>
+
+                <section class="section">
+                    <h1 class="title">Recentemente Adicionados</h1>
+                </section>
+                <section class="section">
+                    <h1 class="title">Próximas Atividades</h1>
+                </section>
+            </div>
+        </div>
+    </body>
+</html>

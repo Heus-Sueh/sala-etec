@@ -1,0 +1,19 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css";
+
+body {
+    min-height: 100vh;
+    margin: 0;
+}
+
+.menu-aside {
+    min-height: 100vh;
+}
+
+.form-login-box {
+    width: 300px;
+}
+
+.form-login input {
+    height: 100%;
+    width: 300px;
+}

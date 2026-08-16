@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"
+        />
+    </head>
+    <body>
+        <section class="section is-large is-flex is-flex-direction-column">
+            <h1 class="title has-text-centered">Sala ETEC</h1>
+            <h2 class="subtitle has-text-centered">
+                Central de informações da ETEC
+            </h2>
+            <div class="container is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
+                <div class="box form-login-box">
+                    <h1 class="title has-text-centered">Entrar</h1>
+                    <form class="form-login" action="/login" method="post">
+                        <div class="field">
+                            <label class="label" for="name">Usuário:</label>
+                            <input
+                                class="input"
+                                id="name-input"
+                                type="text"
+                                name="name"
+                                value=""
+                                placeholder="Joãozinho"
+                            />
+                        </div>
+                        <div class="field">
+                            <label class="label" for="name">Senha:</label>
+                            <input
+                                class="input"
+                                id="password-input"
+                                type="text"
+                                name="password"
+                                value=""
+                                placeholder="Senha123"
+                            />
+                        </div>
+                        <button class="button is-link" type="submit">
+                            Entrar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+            <div>
+                <h3>{{ user }}</h3>
+                <h3>{{ senha }}</h3>
+            </div>
+        </div>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

@@ -87,6 +87,8 @@ Disponibilizar uma plataforma online para organização e compartilhamento de co
 
 * MySQL
 
+![DER](/docs/DER.png)
+
 ---
 
 # Módulos do Sistema

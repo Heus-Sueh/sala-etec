@@ -31,7 +31,7 @@
                         <ul class="menu-list">
                             <li><a href="#">Início</a></li>
                             <li><a href="#">Disciplinas</a></li>
-                            <li><a href="#">Materiais</a></li>
+                            <li><a href="{{ url_for('listar_materiais') }}">Materiais</a></li>
                             <li><a href="#">Atividades</a></li>
                             <li><a href="#">Favoritos</a></li>
                             <li><a href="#">Progresso</a></li>
@@ -44,12 +44,71 @@
                     <h1 class="title">Olá, {{ user }}</h1>
                     <h2 class="subtitle">Continue seus estudos</h2>
                 </section>
-
                 <section class="section">
+                    <h2 class="title">Visão geral</h2>
+
+                    <div class="columns">
+                        <div class="column">
+                            <div class="box has-text-centered">
+                                <p class="heading">Disciplinas</p>
+
+                                <p class="title">{{ total_disciplinas }}</p>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="box has-text-centered">
+                                <p class="heading">Materiais</p>
+
+                                <p class="title">{{ total_materiais }}</p>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="box has-text-centered">
+                                <p class="heading">Publicados</p>
+
+                                <p class="title">{{ materiais_publicados }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section adicionados">
                     <h1 class="title">Recentemente Adicionados</h1>
                 </section>
                 <section class="section">
                     <h1 class="title">Próximas Atividades</h1>
+                </section>
+                <section class="section">
+                    <h1 class="title">Materiais</h1>
+                    {% for m in materiais %}
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-header">
+                                <h3 class="title">{{ m["titulo"] }}</h3>
+                            </div>
+                            <div class="content">
+                                <p>{{ m["disciplina"] }}</p>
+                                <p>{{ m["professor"] }}</p>
+                                <p>{{ m["status"] }}</p>
+                            </div>
+                        </div>
+                        <footer class="card-footer">
+                            <form
+                                action="{{ url_for('mudar_status', id=m['id']) }}"
+                                method="post"
+                            >
+                                <button
+                                    class="card-footer-item button is-white"
+                                    type="submit"
+                                >
+                                    {% if m["status"] == "Publicado" %} Arquivar
+                                    {% else %} Publicar {% endif %}
+                                </button>
+                            </form>
+                        </footer>
+                    </div>
+                    {% endfor %}
                 </section>
             </div>
         </div>

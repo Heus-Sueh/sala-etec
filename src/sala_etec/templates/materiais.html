@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Materiais | Sala ETEC</title>
+
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"
+        />
+    </head>
+
+    <body>
+        <section class="section">
+            <h1 class="title">Materiais</h1>
+
+            <form action="{{ url_for('listar_materiais') }}" method="GET">
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                        <input
+                            class="input"
+                            type="text"
+                            name="busca"
+                            placeholder="Pesquisar material ou disciplina..."
+                            value="{{ busca }}"
+                        />
+                    </div>
+
+                    <div class="control">
+                        <button class="button is-link" type="submit">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="mt-5">
+                {% if materiais %} {% for material in materiais %}
+
+                <div class="card mb-4">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            {{ material["titulo"] }}
+                        </p>
+                    </header>
+
+                    <div class="card-content">
+                        <p>
+                            <strong>Disciplina:</strong>
+                            {{ material["disciplina"] }}
+                        </p>
+
+                        <p>
+                            <strong>Professor:</strong>
+                            {{ material["professor"] }}
+                        </p>
+
+                        <p>
+                            <strong>Status:</strong>
+                            {{ material["status"] }}
+                        </p>
+                    </div>
+
+                    <footer class="card-footer">
+                        <form
+                            action="{{ url_for('mudar_status', id=material['id']) }}"
+                            method="POST"
+                        >
+                            <button
+                                class="button is-white card-footer-item"
+                                type="submit"
+                            >
+                                {% if material["status"] == "Publicado" %}
+                                Arquivar {% else %} Publicar {% endif %}
+                            </button>
+                        </form>
+                    </footer>
+                </div>
+
+                {% endfor %} {% else %}
+
+                <div class="notification">Nenhum material encontrado.</div>
+
+                {% endif %}
+            </div>
+        </section>
+    </body>
+</html>

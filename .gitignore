@@ -18,3 +18,5 @@ wheels/
 
 ENV/
 env/
+
+mise.toml

@@ -112,6 +112,46 @@ def mudar_status(id):
 
     return "Material não encontrado", 404
 
+@app.route("/adicionar/", methods=["POST"])
+def adicionar_material():
+
+    titulo = request.form.get("titulo", "").strip()
+    disciplina = request.form.get("disciplina", "").strip()
+    professor = request.form.get("professor", "").strip()
+
+    # "titulo": "Modelo Entidade-Relacionamento",
+    # "disciplina": "Banco de Dados II",
+    # "professor": "João",
+    # "status": "Publicado",
+    if not titulo:
+           return render_template(
+               "adicionar.html",
+               error="O título do material é obrigatório."
+           )
+
+    if not disciplina:
+        return render_template(
+            "adicionar.html",
+            error="A disciplina é obrigatória."
+        )
+
+    if not professor:
+        return render_template(
+            "adicionar.html",
+            error="O professor é obrigatório."
+        )
+
+    material = {
+        "id": len(materiais) + 1,
+        "titulo": titulo,
+        "disciplina": disciplina,
+        "professor": professor,
+        "status": "Publicado",
+    }
+    materiais.append(material)
+
+    return redirect(url_for("listar_materiais"))
+
 def main():
     app.run(debug=True)
 

@@ -16,74 +16,123 @@
         <section class="section">
             <h1 class="title">Materiais</h1>
 
-            <form action="{{ url_for('listar_materiais') }}" method="GET">
-                <div class="field has-addons">
-                    <div class="control is-expanded">
-                        <input
-                            class="input"
-                            type="text"
-                            name="busca"
-                            placeholder="Pesquisar material ou disciplina..."
-                            value="{{ busca }}"
-                        />
+            <div class="box">
+                <h3 class="subtitle">Adicionar material:</h3>
+                <form action="{{ url_for('adicionar_material') }}" method="POST">
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <div class="field">
+                                <label class="label">Titulo</label>
+                                <input
+                                    class="input"
+                                    type="text"
+                                    name="titulo"
+                                    placeholder="titulo do material"
+                                    value=""
+                                />
+                            </div>
+                            <div class="field">
+                                <label class="label">Disciplina</label>
+                                <input
+                                    class="input"
+                                    type="text"
+                                    name="disciplina"
+                                    placeholder="disciplina do material"
+                                    value=""
+                                />
+                            </div>
+                            <div class="field">
+                                <label class="label">Professor</label>
+                                <input
+                                    class="input"
+                                    type="text"
+                                    name="professor"
+                                    placeholder="professor do material"
+                                    value=""
+                                />
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-link" type="submit">
+                                        Adicionar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </form>
+            </div>
+            <div class="box">
+                <h3 class="subtitle">Pesquisar material</h3>
+                <form action="{{ url_for('listar_materiais') }}" method="GET">
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <input
+                                class="input"
+                                type="text"
+                                name="busca"
+                                placeholder="Pesquisar material ou disciplina..."
+                                value="{{ busca }}"
+                            />
+                        </div>
 
-                    <div class="control">
-                        <button class="button is-link" type="submit">
-                            Buscar
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-            <div class="mt-5">
-                {% if materiais %} {% for material in materiais %}
-
-                <div class="card mb-4">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            {{ material["titulo"] }}
-                        </p>
-                    </header>
-
-                    <div class="card-content">
-                        <p>
-                            <strong>Disciplina:</strong>
-                            {{ material["disciplina"] }}
-                        </p>
-
-                        <p>
-                            <strong>Professor:</strong>
-                            {{ material["professor"] }}
-                        </p>
-
-                        <p>
-                            <strong>Status:</strong>
-                            {{ material["status"] }}
-                        </p>
-                    </div>
-
-                    <footer class="card-footer">
-                        <form
-                            action="{{ url_for('mudar_status', id=material['id']) }}"
-                            method="POST"
-                        >
-                            <button
-                                class="button is-white card-footer-item"
-                                type="submit"
-                            >
-                                {% if material["status"] == "Publicado" %}
-                                Arquivar {% else %} Publicar {% endif %}
+                        <div class="control">
+                            <button class="button is-link" type="submit">
+                                Buscar
                             </button>
-                        </form>
-                    </footer>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="mt-5">
+                    {% if materiais %} {% for material in materiais %}
+
+                    <div class="card mb-4">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                {{ material["titulo"] }}
+                            </p>
+                        </header>
+
+                        <div class="card-content">
+                            <p>
+                                <strong>Disciplina:</strong>
+                                {{ material["disciplina"] }}
+                            </p>
+
+                            <p>
+                                <strong>Professor:</strong>
+                                {{ material["professor"] }}
+                            </p>
+
+                            <p>
+                                <strong>Status:</strong>
+                                {{ material["status"] }}
+                            </p>
+                        </div>
+
+                        <footer class="card-footer">
+                            <form
+                                action="{{ url_for('mudar_status', id=material['id']) }}"
+                                method="POST"
+                            >
+                                <button
+                                    class="button is-white card-footer-item"
+                                    type="submit"
+                                >
+                                    {% if material["status"] == "Publicado" %}
+                                    Arquivar {% else %} Publicar {% endif %}
+                                </button>
+                            </form>
+                        </footer>
+                    </div>
+
+                    {% endfor %} {% else %}
+
+                    <div class="notification">Nenhum material encontrado.</div>
+
+                    {% endif %}
                 </div>
-
-                {% endfor %} {% else %}
-
-                <div class="notification">Nenhum material encontrado.</div>
-
-                {% endif %}
             </div>
         </section>
     </body>

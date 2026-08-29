@@ -131,12 +131,13 @@ Disponibilizar uma plataforma online para organização e compartilhamento de co
 # Padrão de Arquitetura Escolhido:
 
 Justificativa Técnica:
+
 A equipe escolheu a arquitetura monolítica porque o sistema Sala Etec possui uma complexidade moderada e será desenvolvido por uma equipe pequena, não havendo inicialmente uma grande necessidade de escala. Nesse modelo, as principais funcionalidades do sistema ficam integradas em uma única aplicação, facilitando o desenvolvimento, os testes, a manutenção e a implantação. Além disso, a arquitetura monolítica é mais adequada para o projeto neste momento, pois permite que a equipe trabalhe com uma estrutura mais simples e tenha maior facilidade para gerenciar o sistema e seu banco de dados. Caso o sistema cresça futuramente e passe a exigir maior escalabilidade, partes específicas poderão ser separadas em serviços independentes.
 
 # Mapeamento de Evento - Arquitetura Orientada a Eventos
 
-Nome do Evento:
-“Quando o professor publica um novo material”
+Nome do Evento: “Quando o professor publica um novo material”
+
 Reações Automatizadas do Sistema:
     1. Salvar o material no banco de dados, associando-o à disciplina, módulo e professor responsável.
     2. Disponibilizar automaticamente o material para os alunos que possuem acesso àquela disciplina.
@@ -145,5 +146,7 @@ Reações Automatizadas do Sistema:
 Esse evento é adequado porque a publicação de materiais é uma das principais funções do Sala Etec e desencadeia várias ações dentro do sistema.
 
 ![usuario-cliente](/docs/usuario-cliente.png)
-![fluxo-dados]](/docs/fluxo-dados.png)
-![modulo-servicos]](/docs/modulo-servicos.png)
+
+![fluxo-dados](/docs/fluxo-dados.png)
+
+![modulo-servicos](/docs/modulo-servicos.png)

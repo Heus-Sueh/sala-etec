@@ -19,4 +19,8 @@ wheels/
 ENV/
 env/
 
-mise.toml
+mise.toml # ignora essa ferramenta
+
+# Banco de Dafos local SQLite e pastas do flask
+*.db
+instance/

@@ -1,28 +1,276 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css";
 
+
+/* =========================
+   TEMA
+   ========================= */
+
+:root {
+    /* Cores principais do Bulma */
+    --bulma-primary-h: 220;
+    --bulma-primary-s: 70%;
+    --bulma-primary-l: 45%;
+
+    --bulma-link-h: 220;
+    --bulma-link-s: 70%;
+    --bulma-link-l: 45%;
+
+    --bulma-success-h: 145;
+    --bulma-success-s: 55%;
+    --bulma-success-l: 40%;
+
+    --bulma-warning-h: 40;
+    --bulma-warning-s: 90%;
+    --bulma-warning-l: 45%;
+
+    --bulma-danger-h: 0;
+    --bulma-danger-s: 70%;
+    --bulma-danger-l: 50%;
+
+
+    /* Fundo */
+    --bulma-body-background-color: #f5f7fa;
+
+    --bulma-scheme-main: #ffffff;
+    --bulma-scheme-main-bis: #f8f9fb;
+    --bulma-scheme-main-ter: #f0f2f5;
+
+
+    /* Texto */
+    --bulma-text: #273142;
+    --bulma-text-strong: #172033;
+    --bulma-text-light: #7a8494;
+
+
+    /* Bordas */
+    --bulma-border: #e2e5ea;
+    --bulma-border-weak: #edf0f3;
+
+
+    /* Componentes */
+    --bulma-box-background-color: #ffffff;
+    --bulma-card-background-color: #ffffff;
+
+
+    /* Navegação */
+    --sala-sidebar-background: #ffffff;
+    --sala-navbar-background: #ffffff;
+
+    --sala-menu-text: #4a5568;
+    --sala-menu-hover-background: #eef3ff;
+    --sala-menu-hover-text: var(--bulma-primary);
+
+    --sala-menu-active-background: var(--bulma-primary);
+    --sala-menu-active-text: #ffffff;
+}
+
+
+/* =========================
+   BASE
+   ========================= */
+
+html,
 body {
-    min-height: 100vh;
+    min-height: 100%;
     margin: 0;
 }
 
-.menu-aside {
+body {
     min-height: 100vh;
+
+    background-color: var(--bulma-body-background-color);
+    color: var(--bulma-text);
 }
 
-.form-login-box {
-    width: 300px;
+
+/* =========================
+   NAVBAR
+   ========================= */
+
+.navbar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3.25rem;
+
+    z-index: 30;
+
+    background-color: var(--sala-navbar-background);
+
+    border-bottom: 1px solid var(--bulma-border);
 }
 
-.form-login input {
-    width: 100%;
+
+/* =========================
+   SIDEBAR
+   ========================= */
+
+.sidebar {
+    position: fixed;
+
+    top: 3.25rem;
+    left: 0;
+    bottom: 0;
+
+    width: 260px;
+
+    padding: 1.5rem;
+
+    background-color: var(--sala-sidebar-background);
+
+    border-right: 1px solid var(--bulma-border);
+
+    overflow-y: auto;
+
+    z-index: 20;
 }
 
-.adicionados .column.box {
-    width: 300px;
-    height: 300px;
-    margin: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+
+/* =========================
+   CONTEÚDO
+   ========================= */
+
+.main-content {
+    margin-left: 260px;
+
+    padding-top: calc(3.25rem + 1rem);
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+}
+
+
+/* =========================
+   MENU
+   ========================= */
+
+.menu-list a {
+    display: block;
+
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.15rem;
+
+    border-radius: 0.5rem;
+
+    background-color: transparent;
+    color: var(--sala-menu-text);
+
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+
+/* Hover */
+
+.menu-list a:hover {
+    background-color: var(--sala-menu-hover-background);
+    color: var(--sala-menu-hover-text);
+}
+
+
+/* Página atual */
+
+.menu-list a.is-active {
+    background-color: var(--sala-menu-active-background);
+    color: var(--sala-menu-active-text);
+}
+
+
+/* =========================
+   LINKS
+   ========================= */
+
+a {
+    color: var(--bulma-link);
+}
+
+a:hover {
+    color: var(--bulma-link-hover);
+}
+
+
+/* =========================
+   FORMULÁRIOS
+   ========================= */
+
+.input,
+.textarea,
+.select select {
+    background-color: var(--bulma-scheme-main);
+
+    border-color: var(--bulma-border);
+
+    color: var(--bulma-text);
+
+    box-shadow: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+    color: var(--bulma-text-light);
+}
+
+.input:focus,
+.textarea:focus,
+.select select:focus {
+    border-color: var(--bulma-primary);
+
+    box-shadow:
+        0 0 0 0.125em
+        var(--bulma-primary-light);
+}
+
+
+/* Labels */
+
+.label {
+    color: var(--bulma-text-strong);
+}
+
+
+/* =========================
+   BOX
+   ========================= */
+
+.box {
+    background-color: var(--bulma-box-background-color);
+
+    border: 1px solid var(--bulma-border-weak);
+
+    box-shadow: var(--bulma-shadow);
+}
+
+
+/* =========================
+   CARD
+   ========================= */
+
+.card {
+    background-color: var(--bulma-card-background-color);
+
+    border: 1px solid var(--bulma-border-weak);
+
+    box-shadow: var(--bulma-shadow);
+}
+
+
+/* =========================
+   BOTÕES
+   ========================= */
+
+.button.is-light {
+    border: 1px solid var(--bulma-border);
+}
+
+
+/* =========================
+   MATERIAIS
+   ========================= */
+
+.material-card {
+    height: 100%;
 }

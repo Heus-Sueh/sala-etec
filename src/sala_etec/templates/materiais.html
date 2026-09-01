@@ -14,125 +14,216 @@
 
     <body>
         <section class="section">
-            <h1 class="title">Materiais</h1>
+            <div class="container">
 
-            <div class="box">
-                <h3 class="subtitle">Adicionar material:</h3>
-                <form action="{{ url_for('adicionar_material') }}" method="POST">
-                    <div class="field has-addons">
-                        <div class="control is-expanded">
-                            <div class="field">
-                                <label class="label">Titulo</label>
-                                <input
-                                    class="input"
-                                    type="text"
-                                    name="titulo"
-                                    placeholder="titulo do material"
-                                    value=""
-                                />
-                            </div>
-                            <div class="field">
-                                <label class="label">Disciplina</label>
-                                <input
-                                    class="input"
-                                    type="text"
-                                    name="disciplina"
-                                    placeholder="disciplina do material"
-                                    value=""
-                                />
-                            </div>
-                            <div class="field">
-                                <label class="label">Professor</label>
-                                <input
-                                    class="input"
-                                    type="text"
-                                    name="professor"
-                                    placeholder="professor do material"
-                                    value=""
-                                />
-                            </div>
-                            <div class="field">
-                                <div class="control">
-                                    <button class="button is-link" type="submit">
-                                        Adicionar
-                                    </button>
-                                </div>
-                            </div>
+                <!-- Cabeçalho -->
+                <div class="level mb-6">
+                    <div class="level-left">
+                        <div>
+                            <h1 class="title mb-2">Materiais</h1>
+                            <p class="subtitle is-6">
+                                Consulte e gerencie os materiais das disciplinas.
+                            </p>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="box">
-                <h3 class="subtitle">Pesquisar material</h3>
-                <form action="{{ url_for('listar_materiais') }}" method="GET">
-                    <div class="field has-addons">
-                        <div class="control is-expanded">
-                            <input
-                                class="input"
-                                type="text"
-                                name="busca"
-                                placeholder="Pesquisar material ou disciplina..."
-                                value="{{ busca }}"
-                            />
-                        </div>
 
-                        <div class="control">
-                            <button class="button is-link" type="submit">
-                                Buscar
-                            </button>
-                        </div>
+                    <div class="level-right">
+                        <a
+                            href="{{ url_for('main.adicionar_material') }}"
+                            class="button is-link"
+                        >
+                            <span>Adicionar material</span>
+                        </a>
                     </div>
-                </form>
+                </div>
 
-                <div class="mt-5">
-                    {% if materiais %} {% for material in materiais %}
 
-                    <div class="card mb-4">
-                        <header class="card-header">
-                            <p class="card-header-title">
-                                {{ material["titulo"] }}
-                            </p>
-                        </header>
+                <!-- Busca -->
+                <div class="box mb-6">
+                    <h2 class="title is-5">Pesquisar materiais</h2>
 
-                        <div class="card-content">
-                            <p>
-                                <strong>Disciplina:</strong>
-                                {{ material["disciplina"] }}
-                            </p>
+                    <form
+                        action="{{ url_for('main.listar_materiais') }}"
+                        method="GET"
+                    >
+                        <div class="field">
+                            <label class="label" for="busca">
+                                Pesquisa
+                            </label>
 
-                            <p>
-                                <strong>Professor:</strong>
-                                {{ material["professor"] }}
-                            </p>
+                            <div class="control has-icons-left">
+                                <input
+                                    id="busca"
+                                    class="input"
+                                    type="search"
+                                    name="busca"
+                                    placeholder="Pesquisar por título ou disciplina..."
+                                    value="{{ busca }}"
+                                />
 
-                            <p>
-                                <strong>Status:</strong>
-                                {{ material["status"] }}
-                            </p>
+                                <span class="icon is-left">
+                                    <span>⌕</span>
+                                </span>
+                            </div>
                         </div>
 
-                        <footer class="card-footer">
-                            <form
-                                action="{{ url_for('mudar_status', id=material['id']) }}"
-                                method="POST"
-                            >
+                        <div class="field is-grouped">
+                            <div class="control">
                                 <button
-                                    class="button is-white card-footer-item"
+                                    class="button is-link"
                                     type="submit"
                                 >
-                                    {% if material["status"] == "Publicado" %}
-                                    Arquivar {% else %} Publicar {% endif %}
+                                    Buscar
                                 </button>
-                            </form>
-                        </footer>
+                            </div>
+
+                            {% if busca %}
+                            <div class="control">
+                                <a
+                                    class="button is-light"
+                                    href="{{ url_for('main.listar_materiais') }}"
+                                >
+                                    Limpar
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+
+
+                <!-- Resultado -->
+                <div class="level mb-4">
+                    <div class="level-left">
+                        <h2 class="title is-4 mb-0">
+                            Materiais disponíveis
+                        </h2>
                     </div>
 
-                    {% endfor %} {% else %}
-
-                    <div class="notification">Nenhum material encontrado.</div>
-
-                    {% endif %}
+                    <div class="level-right">
+                        <span class="tag is-light is-medium">
+                            {{ materiais|length }} encontrados
+                        </span>
+                    </div>
                 </div>
+
+
+                <!-- Lista -->
+                {% if materiais %}
+
+                    <div class="columns is-multiline">
+
+                        {% for material in materiais %}
+
+                        <div class="column is-12-tablet is-6-desktop">
+
+                            <div class="card material-card">
+
+                                <header class="card-header">
+                                    <p class="card-header-title">
+                                        {{ material.titulo }}
+                                    </p>
+                                </header>
+
+                                <div class="card-content">
+
+                                    <div class="content">
+
+                                        <p>
+                                            <strong>Disciplina</strong><br>
+                                            {{ material.disciplina.nome }}
+                                        </p>
+
+                                        <p>
+                                            <strong>Professor</strong><br>
+                                            {{ material.professor.nome }}
+                                        </p>
+
+                                        {% if material.desc %}
+                                        <p>
+                                            {{ material.desc }}
+                                        </p>
+                                        {% endif %}
+
+                                    </div>
+
+                                    <div class="is-flex is-justify-content-space-between is-align-items-center">
+
+                                        {% if material.status == "Publicado" %}
+                                            <span class="tag is-success is-light">
+                                                Publicado
+                                            </span>
+                                        {% else %}
+                                            <span class="tag is-warning is-light">
+                                                Arquivado
+                                            </span>
+                                        {% endif %}
+
+                                        <small class="has-text-grey">
+                                            {{ material.criado_em.strftime('%d/%m/%Y') }}
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                                <footer class="card-footer">
+
+                                    <form
+                                        action="{{ url_for('main.mudar_status', id=material.id) }}"
+                                        method="POST"
+                                        class="card-footer-item"
+                                    >
+                                        <button
+                                            class="button is-white"
+                                            type="submit"
+                                        >
+                                            {% if material.status == "Publicado" %}
+                                                Arquivar
+                                            {% else %}
+                                                Publicar
+                                            {% endif %}
+                                        </button>
+                                    </form>
+
+                                    <form
+                                        action="{{ url_for('main.excluir_material', id=material.id) }}"
+                                        method="POST"
+                                        class="card-footer-item"
+                                        onsubmit="return confirm('Tem certeza que deseja excluir este material?');"
+                                    >
+                                        <button
+                                            class="button is-danger is-light"
+                                            type="submit"
+                                        >
+                                            Excluir
+                                        </button>
+                                    </form>
+
+                                </footer>
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="notification is-light">
+                        <p class="title is-5">
+                            Nenhum material encontrado
+                        </p>
+
+                        <p>
+                            Tente pesquisar por outro termo.
+                        </p>
+                    </div>
+
+                {% endif %}
+
             </div>
         </section>
     </body>

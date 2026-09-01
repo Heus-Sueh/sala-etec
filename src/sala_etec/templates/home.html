@@ -1,116 +1,288 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Início</title>
+
+        <title>Início | Sala ETEC</title>
+
         <link
             rel="stylesheet"
             href="{{ url_for('static', filename='css/style.css') }}"
         />
     </head>
+
     <body>
-        <nav class="navbar" role="navigation" aria-label="aria navigation">
+        <!-- Navbar -->
+        <nav
+            class="navbar"
+            role="navigation"
+            aria-label="Navegação principal"
+        >
             <div class="navbar-start">
                 <div class="navbar-item">
-                    <a href="#" class="title is-link is-primary">Sala ETEC</a>
+                    <a
+                        href="{{ url_for('main.home') }}"
+                        class="title"
+                    >
+                        Sala ETEC
+                    </a>
                 </div>
             </div>
+
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-primary" href="#">{{ user }}</a>
-                    </div>
+                    <a class="button is-light" href="#">
+                        {{ user }}
+                    </a>
                 </div>
             </div>
         </nav>
-        <div class="columns">
-            <div class="column is-one-fifth">
-                <div class="menu-aside">
-                    <aside class="menu">
-                        <ul class="menu-list">
-                            <li><a href="#">Início</a></li>
-                            <li><a href="#">Disciplinas</a></li>
-                            <li><a href="{{ url_for('listar_materiais') }}">Materiais</a></li>
-                            <li><a href="#">Atividades</a></li>
-                            <li><a href="#">Favoritos</a></li>
-                            <li><a href="#">Progresso</a></li>
-                        </ul>
-                    </aside>
-                </div>
-            </div>
-            <div class="column">
+
+        <!-- Layout -->
+        <div class="app-layout">
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <nav class="menu">
+
+                    <p class="menu-label">
+                        Navegação
+                    </p>
+
+                    <ul class="menu-list">
+
+                        <li>
+                            <a
+                                href="{{ url_for('main.home') }}"
+                                class="is-active"
+                            >
+                                Início
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                Disciplinas
+                            </a>
+                        </li>
+
+                        <li>
+                            <a
+                                href="{{ url_for('main.listar_materiais') }}"
+                            >
+                                Materiais
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                Atividades
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                Favoritos
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#">
+                                Progresso
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </nav>
+            </aside>
+
+            <!-- Conteúdo -->
+            <main class="main-content">
+
+                <!-- Saudação -->
                 <section class="section">
-                    <h1 class="title">Olá, {{ user }}</h1>
-                    <h2 class="subtitle">Continue seus estudos</h2>
+                    <h1 class="title">
+                        Olá, {{ user }}
+                    </h1>
+
+                    <p class="subtitle">
+                        Continue seus estudos.
+                    </p>
                 </section>
+
+                <!-- Indicadores -->
                 <section class="section">
-                    <h2 class="title">Visão geral</h2>
+
+                    <h2 class="title is-4">
+                        Visão geral
+                    </h2>
 
                     <div class="columns">
+
                         <div class="column">
                             <div class="box has-text-centered">
-                                <p class="heading">Disciplinas</p>
+                                <p class="heading">
+                                    Disciplinas
+                                </p>
 
-                                <p class="title">{{ total_disciplinas }}</p>
+                                <p class="title has-text-link">
+                                    {{ total_disciplinas }}
+                                </p>
                             </div>
                         </div>
 
                         <div class="column">
                             <div class="box has-text-centered">
-                                <p class="heading">Materiais</p>
+                                <p class="heading">
+                                    Materiais
+                                </p>
 
-                                <p class="title">{{ total_materiais }}</p>
+                                <p class="title has-text-link">
+                                    {{ total_materiais }}
+                                </p>
                             </div>
                         </div>
 
                         <div class="column">
                             <div class="box has-text-centered">
-                                <p class="heading">Publicados</p>
+                                <p class="heading">
+                                    Publicados
+                                </p>
 
-                                <p class="title">{{ materiais_publicados }}</p>
+                                <p class="title has-text-success">
+                                    {{ materiais_publicados }}
+                                </p>
                             </div>
                         </div>
+
                     </div>
+
                 </section>
-                <section class="section adicionados">
-                    <h1 class="title">Recentemente Adicionados</h1>
-                </section>
+
+                <!-- Materiais recentes -->
                 <section class="section">
-                    <h1 class="title">Próximas Atividades</h1>
-                </section>
-                <section class="section">
-                    <h1 class="title">Materiais</h1>
-                    {% for m in materiais %}
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="card-header">
-                                <h3 class="title">{{ m["titulo"] }}</h3>
-                            </div>
-                            <div class="content">
-                                <p>{{ m["disciplina"] }}</p>
-                                <p>{{ m["professor"] }}</p>
-                                <p>{{ m["status"] }}</p>
+
+                    <div class="level">
+
+                        <div class="level-left">
+                            <div>
+                                <h2 class="title is-4">
+                                    Materiais recentes
+                                </h2>
+
+                                <p class="subtitle is-6">
+                                    Confira os últimos materiais adicionados.
+                                </p>
                             </div>
                         </div>
-                        <footer class="card-footer">
-                            <form
-                                action="{{ url_for('mudar_status', id=m['id']) }}"
-                                method="post"
+
+                        <div class="level-right">
+                            <a
+                                href="{{ url_for('main.listar_materiais') }}"
+                                class="button is-light"
                             >
-                                <button
-                                    class="card-footer-item button is-white"
-                                    type="submit"
-                                >
-                                    {% if m["status"] == "Publicado" %} Arquivar
-                                    {% else %} Publicar {% endif %}
-                                </button>
-                            </form>
-                        </footer>
+                                Ver todos
+                            </a>
+                        </div>
+
                     </div>
-                    {% endfor %}
+
+                    {% if materiais %}
+
+                    <div class="columns is-multiline">
+
+                        {% for material in materiais[:4] %}
+
+                        <div class="column is-half">
+
+                            <div class="card material-card">
+
+                                <div class="card-content">
+
+                                    <p class="title is-5">
+                                        {{ material.titulo }}
+                                    </p>
+
+                                    <p class="mb-2">
+                                        <strong>Disciplina:</strong>
+                                        {{ material.disciplina.nome }}
+                                    </p>
+
+                                    <p class="is-size-7 has-text-grey">
+                                        Professor:
+                                        {{ material.professor.nome }}
+                                    </p>
+
+                                </div>
+
+                                <footer class="card-footer">
+
+                                    <a
+                                        href="#"
+                                        class="card-footer-item"
+                                    >
+                                        Visualizar
+                                    </a>
+
+                                </footer>
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="notification is-light">
+                        Nenhum material foi adicionado ainda.
+                    </div>
+
+                    {% endif %}
+
                 </section>
-            </div>
+
+                <!-- Próximas atividades -->
+                <section class="section">
+
+                    <div class="level">
+
+                        <div class="level-left">
+                            <div>
+                                <h2 class="title is-4">
+                                    Próximas atividades
+                                </h2>
+
+                                <p class="subtitle is-6">
+                                    Acompanhe suas próximas atividades.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="level-right">
+                            <a
+                                href="#"
+                                class="button is-light"
+                            >
+                                Ver atividades
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <div class="notification is-light">
+                        Nenhuma atividade próxima.
+                    </div>
+
+                </section>
+
+            </main>
+
         </div>
+
     </body>
 </html>

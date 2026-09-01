@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Adicionar Material | Sala ETEC</title>
+
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"
+        >
+    </head>
+
+    <body>
+
+        <main class="main-content">
+
+            <div class="container">
+
+                <div class="level mb-5">
+
+                    <div class="level-left">
+                        <div>
+                            <h1 class="title">
+                                Adicionar material
+                            </h1>
+
+                            <p class="subtitle">
+                                Publique um novo material para uma disciplina.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="level-right">
+                        <a
+                            href="{{ url_for('main.listar_materiais') }}"
+                            class="button is-light"
+                        >
+                            Voltar
+                        </a>
+                    </div>
+
+                </div>
+
+
+                {% if error %}
+                    <div class="notification is-danger is-light">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+
+                <div class="box">
+
+                    <form
+                        action="{{ url_for('main.adicionar_material') }}"
+                        method="POST"
+                    >
+
+                        <!-- Título -->
+                        <div class="field">
+
+                            <label class="label">
+                                Título
+                            </label>
+
+                            <div class="control">
+
+                                <input
+                                    class="input"
+                                    type="text"
+                                    name="titulo"
+                                    placeholder="Ex.: Introdução ao SQL"
+                                    value="{{ request.form.get('titulo', '') }}"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Descrição -->
+                        <div class="field">
+
+                            <label class="label">
+                                Descrição
+                            </label>
+
+                            <div class="control">
+
+                                <textarea
+                                    class="textarea"
+                                    name="desc"
+                                    placeholder="Descreva brevemente o material..."
+                                >{{ request.form.get('desc', '') }}</textarea>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Disciplina -->
+                        <div class="field">
+                            <label class="label" for="disciplina_id">
+                                Disciplina
+                            </label>
+
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select name="disciplina_id" id="disciplina_id">
+                                        <option value="">
+                                            Selecione uma disciplina
+                                        </option>
+
+                                        {% for disciplina in disciplinas %}
+                                            <option value="{{ disciplina.id }}">
+                                                {{ disciplina.nome }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Professor -->
+                        <div class="field">
+                            <label class="label" for="professor_id">
+                                Professor
+                            </label>
+
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select name="professor_id" id="professor_id">
+                                        <option value="">
+                                            Selecione um professor
+                                        </option>
+
+                                        {% for professor in professores %}
+                                            <option value="{{ professor.id }}">
+                                                {{ professor.nome }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Botões -->
+                        <div class="field is-grouped mt-5">
+
+                            <div class="control">
+
+                                <button
+                                    type="submit"
+                                    class="button is-primary"
+                                >
+                                    Adicionar material
+                                </button>
+
+                            </div>
+
+                            <div class="control">
+
+                                <a
+                                    href="{{ url_for('main.listar_materiais') }}"
+                                    class="button is-light"
+                                >
+                                    Cancelar
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </body>
+</html>

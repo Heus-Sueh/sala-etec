@@ -85,7 +85,7 @@ Disponibilizar uma plataforma online para organização e compartilhamento de co
 
 **Banco de Dados**
 
-* MySQL
+* SQLite
 
 ![DER](/docs/DER.png)
 
@@ -129,6 +129,12 @@ Disponibilizar uma plataforma online para organização e compartilhamento de co
 * Segunda a Sexta das 18:00 às 22:00
 
 # Padrão de Arquitetura Escolhido:
+
+O sistema Sala Etec será desenvolvido utilizando uma arquitetura monolítica, na qual as principais funcionalidades da aplicação estarão integradas em um único sistema. A aplicação será responsável pelo gerenciamento de usuários, autenticação, cursos, módulos, disciplinas, materiais acadêmicos, pesquisas e controle de permissões.
+
+A aplicação será organizada em diferentes camadas e componentes, permitindo uma separação adequada das responsabilidades. O sistema contará com uma camada responsável pela interface com o usuário, uma camada responsável pelas regras de negócio e uma camada responsável pelo acesso e gerenciamento dos dados.
+
+A comunicação entre a aplicação e o banco de dados será realizada por meio do SQLAlchemy, enquanto o SQlite será utilizado para armazenamento das informações. O FastAPI será responsável pela construção da API e pelo processamento das requisições do sistema.
 
 Justificativa Técnica:
 

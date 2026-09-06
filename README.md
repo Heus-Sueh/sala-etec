@@ -147,10 +147,12 @@ A equipe escolheu a arquitetura monolítica porque o sistema Sala Etec possui um
 Nome do Evento: “Quando o professor publica um novo material”
 
 Reações Automatizadas do Sistema:
-    1. Salvar o material no banco de dados, associando-o à disciplina, módulo e professor responsável.
-    2. Disponibilizar automaticamente o material para os alunos que possuem acesso àquela disciplina.
-    3. Atualizar a listagem de materiais da disciplina, permitindo que o novo conteúdo seja encontrado pela pesquisa.
-    4. Registrar a publicação, armazenando informações como data, professor e material publicado.
+
+1. Salvar o material no banco de dados, associando-o à disciplina, módulo e professor responsável.
+2. Disponibilizar automaticamente o material para os alunos que possuem acesso àquela disciplina.
+3. Atualizar a listagem de materiais da disciplina, permitindo que o novo conteúdo seja encontrado pela pesquisa.
+4. Registrar a publicação, armazenando informações como data, professor e material publicado.
+    
 Esse evento é adequado porque a publicação de materiais é uma das principais funções do Sala Etec e desencadeia várias ações dentro do sistema.
 
 ![usuario-cliente](/docs/diagrama-usuario-cliente.png)

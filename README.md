@@ -159,7 +159,7 @@ Esse evento é adequado porque a publicação de materiais é uma das principais
 
 ![fluxo-dados](/docs/diagrama-dfd.png)
 
-![modulo-servicos](/docs/diagrama-modulo-servicos.png)
+![modulo-servicos](/docs/diagrama-modulos-servicos.png)
 
 
 # Mapeamento dos Padrões de Comunicação

@@ -87,7 +87,7 @@ Disponibilizar uma plataforma online para organização e compartilhamento de co
 
 * SQLite
 
-![DER](/docs/diagrama-banco-de-dados.png)
+![DER](docs/diagrama-banco-de-dados.png)
 
 ---
 
@@ -140,7 +140,7 @@ Justificativa Técnica:
 
 A equipe escolheu a arquitetura monolítica porque o sistema Sala Etec possui uma complexidade moderada e será desenvolvido por uma equipe pequena, não havendo inicialmente uma grande necessidade de escala. Nesse modelo, as principais funcionalidades do sistema ficam integradas em uma única aplicação, facilitando o desenvolvimento, os testes, a manutenção e a implantação. Além disso, a arquitetura monolítica é mais adequada para o projeto neste momento, pois permite que a equipe trabalhe com uma estrutura mais simples e tenha maior facilidade para gerenciar o sistema e seu banco de dados. Caso o sistema cresça futuramente e passe a exigir maior escalabilidade, partes específicas poderão ser separadas em serviços independentes.
 
-![arquitetura](/docs/diagrama-arquitetura.png)
+![arquitetura](docs/diagrama-arquitetura.png)
 
 # Mapeamento de Evento - Arquitetura Orientada a Eventos
 
@@ -155,11 +155,11 @@ Reações Automatizadas do Sistema:
     
 Esse evento é adequado porque a publicação de materiais é uma das principais funções do Sala Etec e desencadeia várias ações dentro do sistema.
 
-![usuario-cliente](/docs/diagrama-usuario-cliente.png)
+![usuario-cliente](docs/diagrama-usuario-cliente.png)
 
-![fluxo-dados](/docs/diagrama-dfd.png)
+![fluxo-dados](docs/diagrama-dfd.png)
 
-![modulo-servicos](/docs/diagrama-modulos-servicos.png)
+![modulo-servicos](docs/diagrama-modulos-servicos.png)
 
 
 # Mapeamento dos Padrões de Comunicação

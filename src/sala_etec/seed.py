@@ -1,4 +1,5 @@
 from datetime import datetime
+from werkzeug.security import generate_password_hash
 
 from sala_etec.app import app
 from sala_etec.database import db
@@ -89,21 +90,21 @@ def criar_dados():
         joao = Usuario(
             nome="João Silva",
             email="joao@salatec.local",
-            senha_hash="senha-ficticia",
+            senha_hash=generate_password_hash("123456"),
             tipo="PROFESSOR"
         )
 
         maria = Usuario(
             nome="Maria Santos",
             email="maria@salatec.local",
-            senha_hash="senha-ficticia",
+            senha_hash=generate_password_hash("123456"),
             tipo="PROFESSOR"
         )
 
         carlos = Usuario(
             nome="Carlos Oliveira",
             email="carlos@salatec.local",
-            senha_hash="senha-ficticia",
+            senha_hash=generate_password_hash("123456"),
             tipo="PROFESSOR"
         )
 
@@ -114,14 +115,14 @@ def criar_dados():
         aluno1 = Usuario(
             nome="Matheus Silva",
             email="matheus@salatec.local",
-            senha_hash="senha-ficticia",
+            senha_hash=generate_password_hash("123456"),
             tipo="ALUNO"
         )
 
         aluno2 = Usuario(
             nome="Ana Souza",
             email="ana@salatec.local",
-            senha_hash="senha-ficticia",
+            senha_hash=generate_password_hash("123456"),
             tipo="ALUNO"
         )
 

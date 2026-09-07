@@ -1,288 +1,190 @@
 <!doctype html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <title>Início | Sala ETEC</title>
-
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='css/style.css') }}"
-        />
-    </head>
-
-    <body>
-        <!-- Navbar -->
-        <nav
-            class="navbar"
-            role="navigation"
-            aria-label="Navegação principal"
-        >
-            <div class="navbar-start">
-                <div class="navbar-item">
-                    <a
-                        href="{{ url_for('main.home') }}"
-                        class="title"
-                    >
-                        Sala ETEC
-                    </a>
-                </div>
-            </div>
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <a class="button is-light" href="#">
-                        {{ user }}
-                    </a>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Layout -->
-        <div class="app-layout">
-
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <nav class="menu">
-
-                    <p class="menu-label">
-                        Navegação
-                    </p>
-
-                    <ul class="menu-list">
-
-                        <li>
-                            <a
-                                href="{{ url_for('main.home') }}"
-                                class="is-active"
-                            >
-                                Início
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                Disciplinas
-                            </a>
-                        </li>
-
-                        <li>
-                            <a
-                                href="{{ url_for('main.listar_materiais') }}"
-                            >
-                                Materiais
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                Atividades
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                Favoritos
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                Progresso
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </nav>
-            </aside>
-
-            <!-- Conteúdo -->
-            <main class="main-content">
-
-                <!-- Saudação -->
-                <section class="section">
-                    <h1 class="title">
-                        Olá, {{ user }}
-                    </h1>
-
-                    <p class="subtitle">
-                        Continue seus estudos.
-                    </p>
-                </section>
-
-                <!-- Indicadores -->
-                <section class="section">
-
-                    <h2 class="title is-4">
-                        Visão geral
-                    </h2>
-
-                    <div class="columns">
-
-                        <div class="column">
-                            <div class="box has-text-centered">
-                                <p class="heading">
-                                    Disciplinas
-                                </p>
-
-                                <p class="title has-text-link">
-                                    {{ total_disciplinas }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="column">
-                            <div class="box has-text-centered">
-                                <p class="heading">
-                                    Materiais
-                                </p>
-
-                                <p class="title has-text-link">
-                                    {{ total_materiais }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="column">
-                            <div class="box has-text-centered">
-                                <p class="heading">
-                                    Publicados
-                                </p>
-
-                                <p class="title has-text-success">
-                                    {{ materiais_publicados }}
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </section>
-
-                <!-- Materiais recentes -->
-                <section class="section">
-
-                    <div class="level">
-
-                        <div class="level-left">
-                            <div>
-                                <h2 class="title is-4">
-                                    Materiais recentes
-                                </h2>
-
-                                <p class="subtitle is-6">
-                                    Confira os últimos materiais adicionados.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="level-right">
-                            <a
-                                href="{{ url_for('main.listar_materiais') }}"
-                                class="button is-light"
-                            >
-                                Ver todos
-                            </a>
-                        </div>
-
-                    </div>
-
-                    {% if materiais %}
-
-                    <div class="columns is-multiline">
-
-                        {% for material in materiais[:4] %}
-
-                        <div class="column is-half">
-
-                            <div class="card material-card">
-
-                                <div class="card-content">
-
-                                    <p class="title is-5">
-                                        {{ material.titulo }}
-                                    </p>
-
-                                    <p class="mb-2">
-                                        <strong>Disciplina:</strong>
-                                        {{ material.disciplina.nome }}
-                                    </p>
-
-                                    <p class="is-size-7 has-text-grey">
-                                        Professor:
-                                        {{ material.professor.nome }}
-                                    </p>
-
-                                </div>
-
-                                <footer class="card-footer">
-
-                                    <a
-                                        href="#"
-                                        class="card-footer-item"
-                                    >
-                                        Visualizar
-                                    </a>
-
-                                </footer>
-
-                            </div>
-
-                        </div>
-
-                        {% endfor %}
-
-                    </div>
-
-                    {% else %}
-
-                    <div class="notification is-light">
-                        Nenhum material foi adicionado ainda.
-                    </div>
-
-                    {% endif %}
-
-                </section>
-
-                <!-- Próximas atividades -->
-                <section class="section">
-
-                    <div class="level">
-
-                        <div class="level-left">
-                            <div>
-                                <h2 class="title is-4">
-                                    Próximas atividades
-                                </h2>
-
-                                <p class="subtitle is-6">
-                                    Acompanhe suas próximas atividades.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="level-right">
-                            <a
-                                href="#"
-                                class="button is-light"
-                            >
-                                Ver atividades
-                            </a>
-                        </div>
-
-                    </div>
-
-                    <div class="notification is-light">
-                        Nenhuma atividade próxima.
-                    </div>
-
-                </section>
-
-            </main>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Início | Sala ETEC</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar" role="navigation" aria-label="Navegação principal">
+      <div class="navbar-start">
+        <div class="navbar-item">
+          <a href="{{ url_for('main.home') }}" class="title"> Sala ETEC </a>
         </div>
+      </div>
 
-    </body>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <a class="button is-light" href="#"> {{ user }} </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Layout -->
+    <div class="app-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <nav class="menu">
+          <p class="menu-label">Navegação</p>
+
+          <ul class="menu-list">
+            <li>
+              <a href="{{ url_for('main.home') }}" class="is-active">
+                Início
+              </a>
+            </li>
+
+            <li>
+              <a href="#"> Disciplinas </a>
+            </li>
+
+            <li>
+              <a href="{{ url_for('main.listar_materiais') }}"> Materiais </a>
+            </li>
+
+            <li>
+              <a href="#"> Atividades </a>
+            </li>
+
+            <li>
+              <a href="#"> Favoritos </a>
+            </li>
+
+            <li>
+              <a href="#"> Progresso </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Conteúdo -->
+      <main class="main-content">
+        <!-- Saudação -->
+        <section class="section">
+          <h1 class="title">Olá, {{ user }}</h1>
+
+          <p class="subtitle">Continue seus estudos.</p>
+        </section>
+
+        <!-- Indicadores -->
+        <section class="section">
+          <h2 class="title is-4">Visão geral</h2>
+
+          <div class="columns">
+            <div class="column">
+              <div class="box has-text-centered">
+                <p class="heading">Disciplinas</p>
+
+                <p class="title has-text-link">{{ total_disciplinas }}</p>
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="box has-text-centered">
+                <p class="heading">Materiais</p>
+
+                <p class="title has-text-link">{{ total_materiais }}</p>
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="box has-text-centered">
+                <p class="heading">Publicados</p>
+
+                <p class="title has-text-success">{{ materiais_publicados }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Materiais recentes -->
+        <section class="section">
+          <div class="level">
+            <div class="level-left">
+              <div>
+                <h2 class="title is-4">Materiais recentes</h2>
+
+                <p class="subtitle is-6">
+                  Confira os últimos materiais adicionados.
+                </p>
+              </div>
+            </div>
+
+            <div class="level-right">
+              <a
+                href="{{ url_for('main.listar_materiais') }}"
+                class="button is-light"
+              >
+                Ver todos
+              </a>
+            </div>
+          </div>
+
+          {% if materiais %}
+
+          <div class="columns is-multiline">
+            {% for material in materiais[:4] %}
+
+            <div class="column is-half">
+              <div class="card material-card">
+                <div class="card-content">
+                  <p class="title is-5">{{ material.titulo }}</p>
+
+                  <p class="mb-2">
+                    <strong>Disciplina:</strong>
+                    {{ material.disciplina.nome }}
+                  </p>
+
+                  <p class="is-size-7 has-text-grey">
+                    Professor: {{ material.professor.nome }}
+                  </p>
+                </div>
+
+                <footer class="card-footer">
+                  <a href="#" class="card-footer-item"> Visualizar </a>
+                </footer>
+              </div>
+            </div>
+
+            {% endfor %}
+          </div>
+
+          {% else %}
+
+          <div class="notification is-light">
+            Nenhum material foi adicionado ainda.
+          </div>
+
+          {% endif %}
+        </section>
+
+        <!-- Próximas atividades -->
+        <section class="section">
+          <div class="level">
+            <div class="level-left">
+              <div>
+                <h2 class="title is-4">Próximas atividades</h2>
+
+                <p class="subtitle is-6">Acompanhe suas próximas atividades.</p>
+              </div>
+            </div>
+
+            <div class="level-right">
+              <a href="#" class="button is-light"> Ver atividades </a>
+            </div>
+          </div>
+
+          <div class="notification is-light">Nenhuma atividade próxima.</div>
+        </section>
+      </main>
+    </div>
+  </body>
 </html>

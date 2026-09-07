@@ -6,6 +6,7 @@ from sala_etec.routes import main_bp
 
 app = Flask(__name__)
 
+app.config["SECRET_KEY"] = "chave-dev-sala-etec"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sala_etec.db"
 
 db.init_app(app)

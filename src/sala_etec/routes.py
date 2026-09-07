@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
+from werkzeug.security import check_password_hash
 from sala_etec.database import db
 from sala_etec.models import Curso, Modulo, Disciplina, Material, Usuario
-
+from sala_etec.decorators import login_required
 
 # Criar o modulo principal das rotas
 main_bp = Blueprint('main', __name__)
@@ -13,40 +14,64 @@ def index():
 
 @main_bp.route("/login", methods=["POST"])
 def login():
-    name = request.form.get("name", "").strip()
-    password = request.form.get("password", "").strip()
+    email = request.form.get("email", "").strip()
+    senha = request.form.get("senha", "").strip()
 
-    if not name:
+    if not email:
         return render_template(
             "index.html",
-            error="O nome de usuário é obrigatório.",
+            error="Informe seu e-mail."
         )
 
-    if not password:
+    if not senha:
         return render_template(
             "index.html",
-            error="A senha é obrigatória.",
+            error="Informe sua senha."
         )
 
-    return redirect(url_for("main.home", user=name))
+    usuario = Usuario.query.filter_by(
+        email=email
+    ).first()
+
+    if not usuario:
+        return render_template(
+            "index.html",
+            error="E-mail ou senha inválidos."
+        )
+
+    if not check_password_hash(
+        usuario.senha_hash,
+        senha
+    ):
+        return render_template(
+            "index.html",
+            error="E-mail ou senha inválidos."
+        )
+
+    session["usuario_id"] = usuario.id
+
+    return redirect(url_for("main.home"))
 
 
 @main_bp.route("/home")
 def home():
-    user = request.args.get("user", "Usuário")
+    usuario_id = session.get("usuario_id")
 
-    materiais = Material.query.all()
-    disciplinas = Disciplina.query.all()
+    if not usuario_id:
+        return redirect(url_for("main.index"))
 
-    total_materiais = len(materiais)
-    total_disciplinas = len(disciplinas)
+    usuario = db.session.get(
+        Usuario,
+        usuario_id
+    )
+
+    if not usuario:
+        session.clear()
+        return redirect(url_for("main.index"))
 
     return render_template(
         "home.html",
-        user=user,
-        total_materiais=total_materiais,
-        total_disciplinas=total_disciplinas,
-        materiais=materiais,
+        usuario=usuario
     )
 
 

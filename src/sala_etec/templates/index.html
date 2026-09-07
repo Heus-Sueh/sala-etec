@@ -1,101 +1,75 @@
+```html
 <!doctype html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>Login | Sala ETEC</title>
+    <title>Login | Sala ETEC</title>
 
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='css/style.css') }}"
-        />
-    </head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
 
-    <body>
-        <section class="section is-large">
-            <div class="container">
+  <body>
+    <section class="section is-large">
+      <div class="container">
+        <h1 class="title has-text-centered">Sala ETEC</h1>
+        <h2 class="subtitle has-text-centered">
+          Central de informações da ETEC
+        </h2>
 
-                <h1 class="title has-text-centered">
-                    Sala ETEC
-                </h1>
+        <div class="is-flex is-justify-content-center">
+          <div class="box form-login-box">
+            <h2 class="title has-text-centered">Entrar</h2>
 
-                <h2 class="subtitle has-text-centered">
-                    Central de informações da ETEC
-                </h2>
+            {% if error %}
+              <div class="notification is-danger is-light">
+                {{ error }}
+              </div>
+            {% endif %}
 
-                <div class="is-flex is-justify-content-center">
-                    <div class="box form-login-box">
+            <form action="{{ url_for('main.login') }}" method="POST">
+              <div class="field">
+                <label class="label" for="email">E-mail</label>
 
-                        <h2 class="title has-text-centered">
-                            Entrar
-                        </h2>
-
-                        {% if error %}
-                            <div class="notification is-danger">
-                                {{ error }}
-                            </div>
-                        {% endif %}
-
-                        <form
-                            class="form-login"
-                            action="{{ url_for('main.login') }}"
-                            method="post"
-                        >
-
-                            <div class="field">
-                                <label
-                                    class="label"
-                                    for="name-input"
-                                >
-                                    Usuário
-                                </label>
-
-                                <div class="control">
-                                    <input
-                                        class="input"
-                                        id="name-input"
-                                        type="text"
-                                        name="name"
-                                        placeholder="Joãozinho"
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <label
-                                    class="label"
-                                    for="password-input"
-                                >
-                                    Senha
-                                </label>
-
-                                <div class="control">
-                                    <input
-                                        class="input"
-                                        id="password-input"
-                                        type="password"
-                                        name="password"
-                                        placeholder="Senha123"
-                                        required
-                                    />
-                                </div>
-                            </div>
-
-                            <button
-                                class="button is-link"
-                                type="submit"
-                            >
-                                Entrar
-                            </button>
-
-                        </form>
-
-                    </div>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="seu@email.com"
+                    required
+                  />
                 </div>
+              </div>
 
-            </div>
-        </section>
-    </body>
+              <div class="field">
+                <label class="label" for="senha">Senha</label>
+
+                <div class="control">
+                  <input
+                    class="input"
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    placeholder="Digite sua senha"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button class="button is-primary is-fullwidth" type="submit">
+                Entrar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
+```

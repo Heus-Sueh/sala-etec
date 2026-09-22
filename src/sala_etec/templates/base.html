@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{% block title %}Sala ETEC{% endblock %}</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar" role="navigation" aria-label="Navegação principal">
+      <div class="navbar-start">
+        <div class="navbar-item">
+          <a href="{{ url_for('main.home') }}" class="title">
+            Sala ETEC
+          </a>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <span>
+            {{ g.usuario.nome }}
+          </span>
+        </div>
+
+        <div class="navbar-item">
+          <form
+            action="{{ url_for('auth.logout') }}"
+            method="POST"
+          >
+            <button
+              type="submit"
+              class="button is-light"
+            >
+              Sair
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Layout -->
+    <div class="app-layout">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <nav class="menu">
+          <p class="menu-label">Navegação</p>
+
+          <ul class="menu-list">
+            <li>
+              <a 
+                href="{{ url_for('main.home') }}"
+                class="{% if request.endpoint == 'main.home' %}is-active{% endif %}"
+                >
+                Início
+              </a>
+            </li>
+
+            <li>
+              <a 
+                href="{{ url_for('main.disciplinas') }}"
+                class="{% if request.endpoint == 'main.disciplinas' %}is-active{% endif %}"
+                >
+                Disciplinas
+              </a>
+            </li>
+
+            <li>
+              <a 
+                href="{{ url_for('materiais.listar') }}"
+                class="{% if request.endpoint == 'materiais.lista' %}is-active{% endif %}"
+                >
+                Materiais
+              </a>
+            </li>
+
+            <li>
+              <a 
+                href="{{ url_for('main.atividades') }}"
+                class="{% if request.endpoint == 'main.atividades' %}is-active{% endif %}"
+                >
+                Atividades
+              </a>
+            </li>
+
+            <li>
+              <a 
+                href="{{ url_for('main.favoritos') }}"
+                class="{% if request.endpoint == 'main.favoritos' %}is-active{% endif %}"
+                >
+                Favoritos
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                Progresso
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Conteúdo -->
+      <main class="main-content">
+
+        {% block back_button %}
+          {% if request.endpoint != 'main.home' %}
+            <div class="mb-4">
+              <a
+                href="{{ url_for('main.home') }}"
+                class="button is-light"
+              >
+                ← Voltar
+              </a>
+            </div>
+          {% endif %}
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+
+      </main>
+
+    </div>
+  </body>
+</html>

@@ -9,14 +9,50 @@ dependencies = [
     "flask-sqlalchemy>=3.1.1",
 ]
 
-[project.scripts]
-sala_etec = "sala_etec.app:main"
-
+[dependency-groups]
+dev = [
+    "ruff>=0.16.6",
+]
 
 [build-system]
 requires = ["uv_build>=0.11.21,<0.12.0"]
 build-backend = "uv_build"
 
+[project.scripts]
+sala_etec = "sala_etec.app:main"
+criar_banco = "sala_etec.create_database:main"
+criar_dados = "sala_etec.seed:main"
+
 [tool.ty.environment]
 root = ["./src"]
 python = ".venv"
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+src = ["src"]
+extend-exclude = [
+    "instance",
+]
+
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true

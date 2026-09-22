@@ -28,7 +28,7 @@
 
           <div class="level-right">
             <a
-              href="{{ url_for('main.listar_materiais') }}"
+              href="{{ url_for('materiais.listar') }}"
               class="button is-light"
             >
               Voltar
@@ -41,7 +41,7 @@
         {% endif %}
 
         <div class="box">
-          <form action="{{ url_for('main.adicionar_material') }}" method="POST">
+          <form action="{{ url_for('materiais.adicionar') }}" method="POST">
             <!-- Título -->
             <div class="field">
               <label class="label"> Título </label>
@@ -119,7 +119,7 @@
 
               <div class="control">
                 <a
-                  href="{{ url_for('main.listar_materiais') }}"
+                  href="{{ url_for('materiais.listar') }}"
                   class="button is-light"
                 >
                   Cancelar

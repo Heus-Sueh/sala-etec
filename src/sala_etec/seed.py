@@ -1,262 +1,316 @@
+# sala_etec/seed.py
 from datetime import datetime
+
 from werkzeug.security import generate_password_hash
 
 from sala_etec.app import app
 from sala_etec.database import db
 from sala_etec.models import (
     Curso,
-    Modulo,
     Disciplina,
-    Usuario,
     Material,
+    Modulo,
+    Usuario,
 )
 
 
-def criar_dados():
-    with app.app_context():
+def criar_cursos():
+    # -------------------------
+    # CURSOS
+    # -------------------------
 
-        # Evita duplicar os dados
-        if Curso.query.first():
-            print("Banco já possui dados.")
-            return
+    ds = Curso(
+        nome="Desenvolvimento de Sistemas",
+        desc="Curso técnico de Desenvolvimento de Sistemas.",
+    )
 
-        # -------------------------
-        # CURSOS
-        # -------------------------
+    adm = Curso(
+        nome="Administração",
+        desc="Curso técnico de Administração.",
+    )
 
-        ds = Curso(
-            nome="Desenvolvimento de Sistemas",
-            desc="Curso técnico de Desenvolvimento de Sistemas."
-        )
+    comercio = Curso(
+        nome="Comércio Exterior",
+        desc="Curso técnico de Comércio Exterior.",
+    )
 
-        adm = Curso(
-            nome="Administração",
-            desc="Curso técnico de Administração."
-        )
+    contabilidade = Curso(
+        nome="Contabilidade",
+        desc="Curso técnico de Contabilidade.",
+    )
 
-        comercio = Curso(
-            nome="Comércio Exterior",
-            desc="Curso técnico de Comércio Exterior."
-        )
-
-        contabilidade = Curso(
-            nome="Contabilidade",
-            desc="Curso técnico de Contabilidade."
-        )
-
-        db.session.add_all([
+    db.session.add_all(
+        [
             ds,
             adm,
             comercio,
-            contabilidade
-        ])
+            contabilidade,
+        ]
+    )
 
-        db.session.flush()
+    db.session.flush()
 
-        # -------------------------
-        # MÓDULOS
-        # -------------------------
+    return ds
 
-        ds_modulo_1 = Modulo(
-            nome="Módulo I",
-            desc="Primeiro módulo de Desenvolvimento de Sistemas.",
-            curso=ds
-        )
 
-        ds_modulo_2 = Modulo(
-            nome="Módulo II",
-            desc="Segundo módulo de Desenvolvimento de Sistemas.",
-            curso=ds
-        )
+def criar_modulos(ds):
+    # -------------------------
+    # MÓDULOS
+    # -------------------------
 
-        ds_modulo_3 = Modulo(
-            nome="Módulo III",
-            desc="Terceiro módulo de Desenvolvimento de Sistemas.",
-            curso=ds
-        )
+    ds_modulo_1 = Modulo(
+        nome="Módulo I",
+        desc="Primeiro módulo de Desenvolvimento de Sistemas.",
+        curso=ds,
+    )
 
-        db.session.add_all([
+    ds_modulo_2 = Modulo(
+        nome="Módulo II",
+        desc="Segundo módulo de Desenvolvimento de Sistemas.",
+        curso=ds,
+    )
+
+    ds_modulo_3 = Modulo(
+        nome="Módulo III",
+        desc="Terceiro módulo de Desenvolvimento de Sistemas.",
+        curso=ds,
+    )
+
+    db.session.add_all(
+        [
             ds_modulo_1,
             ds_modulo_2,
-            ds_modulo_3
-        ])
+            ds_modulo_3,
+        ]
+    )
 
-        db.session.flush()
+    db.session.flush()
 
-        # -------------------------
-        # USUÁRIOS / PROFESSORES
-        # -------------------------
+    return ds_modulo_1, ds_modulo_2, ds_modulo_3
 
-        joao = Usuario(
-            nome="João Silva",
-            email="joao@salatec.local",
-            senha_hash=generate_password_hash("123456"),
-            tipo="PROFESSOR"
-        )
 
-        maria = Usuario(
-            nome="Maria Santos",
-            email="maria@salatec.local",
-            senha_hash=generate_password_hash("123456"),
-            tipo="PROFESSOR"
-        )
+def criar_usuarios():
+    # -------------------------
+    # PROFESSORES
+    # -------------------------
 
-        carlos = Usuario(
-            nome="Carlos Oliveira",
-            email="carlos@salatec.local",
-            senha_hash=generate_password_hash("123456"),
-            tipo="PROFESSOR"
-        )
+    joao = Usuario(
+        nome="João Silva",
+        email="joao@salatec.local",
+        senha_hash=generate_password_hash("123456"),
+        tipo="PROFESSOR",
+    )
 
-        # -------------------------
-        # ALUNOS
-        # -------------------------
+    maria = Usuario(
+        nome="Maria Santos",
+        email="maria@salatec.local",
+        senha_hash=generate_password_hash("123456"),
+        tipo="PROFESSOR",
+    )
 
-        aluno1 = Usuario(
-            nome="Matheus Silva",
-            email="matheus@salatec.local",
-            senha_hash=generate_password_hash("123456"),
-            tipo="ALUNO"
-        )
+    carlos = Usuario(
+        nome="Carlos Oliveira",
+        email="carlos@salatec.local",
+        senha_hash=generate_password_hash("123456"),
+        tipo="PROFESSOR",
+    )
 
-        aluno2 = Usuario(
-            nome="Ana Souza",
-            email="ana@salatec.local",
-            senha_hash=generate_password_hash("123456"),
-            tipo="ALUNO"
-        )
+    # -------------------------
+    # ALUNOS
+    # -------------------------
 
-        # -------------------------
-        # ADMINISTRADOR
-        # -------------------------
+    aluno1 = Usuario(
+        nome="Matheus Silva",
+        email="matheus@salatec.local",
+        senha_hash=generate_password_hash("123456"),
+        tipo="ALUNO",
+    )
 
-        admin = Usuario(
-            nome="Administrador",
-            email="admin@salatec.local",
-            senha_hash="senha-ficticia",
-            tipo="ADMIN"
-        )
+    aluno2 = Usuario(
+        nome="Ana Souza",
+        email="ana@salatec.local",
+        senha_hash=generate_password_hash("123456"),
+        tipo="ALUNO",
+    )
 
-        db.session.add_all([
+    # -------------------------
+    # ADMINISTRADOR
+    # -------------------------
+
+    admin = Usuario(
+        nome="Administrador",
+        email="admin@salatec.local",
+        senha_hash=generate_password_hash("123456"),
+        tipo="ADMIN",
+    )
+
+    db.session.add_all(
+        [
             joao,
             maria,
             carlos,
             aluno1,
             aluno2,
-            admin
-        ])
+            admin,
+        ]
+    )
 
-        db.session.flush()
+    db.session.flush()
 
-        # -------------------------
-        # DISCIPLINAS
-        # -------------------------
+    return joao, maria, carlos
 
-        banco = Disciplina(
-            nome="Banco de Dados II",
-            desc="Banco de dados relacionais e SQL.",
-            modulo=ds_modulo_2
-        )
 
-        web = Disciplina(
-            nome="Programação Web II",
-            desc="Desenvolvimento de aplicações web.",
-            modulo=ds_modulo_2
-        )
+def criar_disciplinas(ds_modulo_1, ds_modulo_2, ds_modulo_3):
+    # -------------------------
+    # DISCIPLINAS
+    # -------------------------
 
-        sistemas = Disciplina(
-            nome="Análise e Projeto de Sistemas",
-            desc="Análise e modelagem de sistemas.",
-            modulo=ds_modulo_1
-        )
+    banco = Disciplina(
+        nome="Banco de Dados II",
+        desc="Banco de dados relacionais e SQL.",
+        modulo=ds_modulo_2,
+    )
 
-        desenvolvimento = Disciplina(
-            nome="Desenvolvimento de Sistemas I",
-            desc="Fundamentos do desenvolvimento de sistemas.",
-            modulo=ds_modulo_1
-        )
+    web = Disciplina(
+        nome="Programação Web II",
+        desc="Desenvolvimento de aplicações web.",
+        modulo=ds_modulo_2,
+    )
 
-        ptcc = Disciplina(
-            nome="PTCC",
-            desc="Planejamento e desenvolvimento do trabalho de conclusão.",
-            modulo=ds_modulo_3
-        )
+    sistemas = Disciplina(
+        nome="Análise e Projeto de Sistemas",
+        desc="Análise e modelagem de sistemas.",
+        modulo=ds_modulo_1,
+    )
 
-        mobile = Disciplina(
-            nome="Programação de Aplicativos Mobile I",
-            desc="Desenvolvimento de aplicações mobile.",
-            modulo=ds_modulo_3
-        )
+    desenvolvimento = Disciplina(
+        nome="Desenvolvimento de Sistemas I",
+        desc="Fundamentos do desenvolvimento de sistemas.",
+        modulo=ds_modulo_1,
+    )
 
-        projetos = Disciplina(
-            nome="Projetos de Desenvolvimento de Sistemas",
-            desc="Desenvolvimento de projetos de sistemas.",
-            modulo=ds_modulo_3
-        )
+    ptcc = Disciplina(
+        nome="PTCC",
+        desc="Planejamento e desenvolvimento do trabalho de conclusão.",
+        modulo=ds_modulo_3,
+    )
 
-        db.session.add_all([
+    mobile = Disciplina(
+        nome="Programação de Aplicativos Mobile I",
+        desc="Desenvolvimento de aplicações mobile.",
+        modulo=ds_modulo_3,
+    )
+
+    projetos = Disciplina(
+        nome="Projetos de Desenvolvimento de Sistemas",
+        desc="Desenvolvimento de projetos de sistemas.",
+        modulo=ds_modulo_3,
+    )
+
+    db.session.add_all(
+        [
             banco,
             web,
             sistemas,
             desenvolvimento,
             ptcc,
             mobile,
-            projetos
-        ])
+            projetos,
+        ]
+    )
 
-        db.session.flush()
+    db.session.flush()
 
-        # -------------------------
-        # MATERIAIS
-        # -------------------------
+    return banco, web, sistemas
 
-        material1 = Material(
-            titulo="Introdução ao SQL",
-            desc="Material introdutório sobre SQL.",
-            disciplina=banco,
-            professor=joao,
-            arquivo="introducao_sql.pdf",
-            criado_em=datetime.now()
-        )
 
-        material2 = Material(
-            titulo="Modelo Entidade-Relacionamento",
-            desc="Introdução aos modelos entidade-relacionamento.",
-            disciplina=banco,
-            professor=joao,
-            arquivo="modelo_er.pdf",
-            criado_em=datetime.now()
-        )
+def criar_materiais(banco, web, sistemas, joao, maria, carlos):
+    # -------------------------
+    # MATERIAIS
+    # -------------------------
 
-        material3 = Material(
-            titulo="Introdução ao Flask",
-            desc="Primeiros passos com Flask.",
-            disciplina=web,
-            professor=maria,
-            arquivo="introducao_flask.pdf",
-            criado_em=datetime.now()
-        )
+    material1 = Material(
+        titulo="Introdução ao SQL",
+        desc="Material introdutório sobre SQL.",
+        disciplina=banco,
+        professor=joao,
+        arquivo="introducao_sql.pdf",
+        criado_em=datetime.now(),
+    )
 
-        material4 = Material(
-            titulo="Documentação de Sistemas",
-            desc="Conceitos de documentação de sistemas.",
-            disciplina=sistemas,
-            professor=carlos,
-            arquivo="documentacao.pdf",
-            criado_em=datetime.now()
-        )
+    material2 = Material(
+        titulo="Modelo Entidade-Relacionamento",
+        desc="Introdução aos modelos entidade-relacionamento.",
+        disciplina=banco,
+        professor=joao,
+        arquivo="modelo_er.pdf",
+        criado_em=datetime.now(),
+    )
 
-        db.session.add_all([
+    material3 = Material(
+        titulo="Introdução ao Flask",
+        desc="Primeiros passos com Flask.",
+        disciplina=web,
+        professor=maria,
+        arquivo="introducao_flask.pdf",
+        criado_em=datetime.now(),
+    )
+
+    material4 = Material(
+        titulo="Documentação de Sistemas",
+        desc="Conceitos de documentação de sistemas.",
+        disciplina=sistemas,
+        professor=carlos,
+        arquivo="documentacao.pdf",
+        criado_em=datetime.now(),
+    )
+
+    db.session.add_all(
+        [
             material1,
             material2,
             material3,
-            material4
-        ])
+            material4,
+        ]
+    )
+
+
+def criar_dados():
+    with app.app_context():
+        # Evita duplicar os dados
+        if Curso.query.first():
+            print("Banco já possui dados.")
+            return
+
+        ds = criar_cursos()
+
+        ds_modulo_1, ds_modulo_2, ds_modulo_3 = criar_modulos(ds)
+
+        joao, maria, carlos = criar_usuarios()
+
+        banco, web, sistemas = criar_disciplinas(
+            ds_modulo_1,
+            ds_modulo_2,
+            ds_modulo_3,
+        )
+
+        criar_materiais(
+            banco,
+            web,
+            sistemas,
+            joao,
+            maria,
+            carlos,
+        )
 
         db.session.commit()
 
         print("Dados fictícios criados com sucesso!")
 
 
-if __name__ == "__main__":
+def main():
     criar_dados()
+
+
+if __name__ == "__main__":
+    main()

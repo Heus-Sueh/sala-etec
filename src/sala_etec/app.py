@@ -1,8 +1,8 @@
+# sala_etec/routes/app.py
 from flask import Flask
 
 from sala_etec.database import db
-from sala_etec.routes import main_bp
-
+from sala_etec.routes import register_blueprints
 
 app = Flask(__name__)
 
@@ -10,8 +10,7 @@ app.config["SECRET_KEY"] = "chave-dev-sala-etec"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sala_etec.db"
 
 db.init_app(app)
-
-app.register_blueprint(main_bp)
+register_blueprints(app)
 
 
 def main():

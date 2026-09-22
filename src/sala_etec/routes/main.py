@@ -1,5 +1,5 @@
 # sala_etec/routes/main.py
-from flask import Blueprint, redirect, render_template, url_for
+from flask import Blueprint, g, redirect, render_template, url_for
 
 from sala_etec.decorators import login_required
 
@@ -15,9 +15,18 @@ def root():
 @main_bp.route("/home")
 @login_required
 def home():
-    return render_template(
-        "main/home.html",
-    )
+    tipo = g.usuario.tipo
+
+    if tipo == "ALUNO":
+        return redirect(url_for("paineis.aluno"))
+
+    if tipo == "PROFESSOR":
+        return redirect(url_for("paineis.professor"))
+
+    if tipo == "ADMIN":
+        return redirect(url_for("paineis.admin"))
+
+    return "Tipo de usuário inválido", 403
 
 
 @main_bp.route("/disciplinas")

@@ -44,12 +44,12 @@ Rotas esperadas:
 
 ## 3. Melhorar `login_required`
 
-- [ ] Centralizar a verificação de `usuario_id` no decorator
-- [ ] Verificar se o usuário da sessão ainda existe
-- [ ] Limpar a sessão caso o usuário não exista
-- [ ] Redirecionar usuários não autenticados para `/login`
+- [x] Centralizar a verificação de `usuario_id` no decorator
+- [x] Verificar se o usuário da sessão ainda existe
+- [x] Limpar a sessão caso o usuário não exista
+- [x] Redirecionar usuários não autenticados para `/login`
 - [x] Aplicar `@login_required` nas páginas protegidas
-- [ ] Remover verificações de autenticação duplicadas das rotas
+- [x] Remover verificações de autenticação duplicadas das rotas
 
 Exemplo desejado:
 
@@ -62,9 +62,9 @@ Exemplo desejado:
 ## 4. Refatorar rotas principais
 
 - [x] Manter as rotas gerais em `routes/main.py`
-- [-] Fazer `/` redirecionar para login ou home
-- [-] Manter `/home` como página inicial do usuário
-- [ ] Remover lógica de autenticação duplicada de `home()`
+- [x] Fazer `/` redirecionar para login ou home
+- [x] Manter `/home` como página inicial do usuário
+- [x] Remover lógica de autenticação duplicada de `home()`
 
 Rotas esperadas:
 
@@ -94,14 +94,14 @@ Rotas esperadas:
 
 ## 6. Padronizar parâmetros e nomes
 
-- [ ] Substituir parâmetros genéricos `id` por nomes específicos
+- [x] Substituir parâmetros genéricos `id` por nomes específicos
 - [x] Usar `material_id`
-- [ ] Usar `disciplina_id`
-- [ ] Usar `usuario_id`
-- [ ] Usar `atividade_id`
+- [x] Usar `disciplina_id`
+- [x] Usar `usuario_id`
+- [x] Usar `atividade_id`
 - [ ] Renomear `desc` para `descricao`
-- [ ] Padronizar nomes de funções em português
-- [ ] Evitar repetir o domínio no nome quando o Blueprint já fornece contexto
+- [x] Padronizar nomes de funções em português
+- [x] Evitar repetir o domínio no nome quando o Blueprint já fornece contexto
 
 Exemplo:
 
@@ -120,9 +120,9 @@ Em vez de:
 
 ## 7. Padronizar acesso ao banco
 
-- [ ] Substituir `Model.query.get(id)` por `db.session.get(Model, id)`
-- [ ] Usar `db.session.get()` consistentemente
-- [ ] Remover imports de models que não são utilizados em cada arquivo
+- [x] Substituir `Model.query.get(id)` por `db.session.get(Model, id)`
+- [x] Usar `db.session.get()` consistentemente
+- [x] Remover imports de models que não são utilizados em cada arquivo
 
 Exemplo:
 

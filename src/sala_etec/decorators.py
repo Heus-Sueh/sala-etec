@@ -26,3 +26,18 @@ def login_required(func):
         return func(*args, **kwargs)
 
     return wrapper
+
+
+
+def role_required(*tipos):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if g.usuario.tipo not in tipos:
+                return "Acesso não autorizado", 403
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator

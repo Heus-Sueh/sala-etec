@@ -1,5 +1,5 @@
 # sala_etec/routes/materiais.py
-from flask import Blueprint, redirect, render_template, request, url_for, session
+from flask import Blueprint, redirect, render_template, request, url_for
 
 from sala_etec.database import db
 from sala_etec.decorators import login_required
@@ -26,9 +26,9 @@ def listar():
     )
 
 
-@materiais_bp.route("/material/<int:material_id>/status", methods=["POST"])
+@materiais_bp.route("/<int:material_id>/status", methods=["POST"])
 @login_required
-def alterarstatus(material_id):
+def alterar_status(material_id):
     material = db.session.get(Material, material_id)
 
     if not material:
@@ -54,7 +54,7 @@ def adicionar():
 
     if request.method == "GET":
         return render_template(
-            url_for("materiais.formulario"),
+            "materiais/formulario.html",
             disciplinas=disciplinas,
             professores=professores,
         )
@@ -91,7 +91,7 @@ def adicionar():
 
     if not professor_id:
         return render_template(
-            "adicionar.html",
+            "materiais/formulario.html",
             disciplinas=disciplinas,
             professores=professores,
             error="O professor é obrigatório.",
@@ -130,10 +130,10 @@ def adicionar():
     return redirect(url_for("materiais.listar"))
 
 
-@materiais_bp.route("/material/<int:material_id>/excluir", methods=["POST"])
+@materiais_bp.route("/<int:material_id>/excluir", methods=["POST"])
 @login_required
 def excluir(material_id):
-    material = Material.query.get(material_id)
+    material = db.session.get(Material, material_id)
 
     if not material:
         return "Material não encontrado", 404

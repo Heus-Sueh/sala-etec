@@ -1,5 +1,7 @@
 # sala_etec/routes/materiais.py
-from flask import Blueprint, redirect, render_template, request, url_for
+import os
+from werkzeug.utils import secure_filename
+from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
 
 from sala_etec.database import db
 from sala_etec.decorators import login_required
@@ -7,6 +9,14 @@ from sala_etec.models import Disciplina, Material, Usuario
 
 # Criar o modulo principal das rotas
 materiais_bp = Blueprint("materiais", __name__, url_prefix="/materiais")
+
+
+# definir as extensões que permitimos receber
+EXTENSOES_PERMITIDAS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+def arquivo_permitido(filename):
+    """Verifica se a extensão do arquivo é permitida."""
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in EXTENSOES_PERMITIDAS
 
 
 @materiais_bp.route("/")
@@ -65,62 +75,54 @@ def adicionar():
     disciplina_id = request.form.get("disciplina_id")
     professor_id = request.form.get("professor_id")
 
-    if not titulo:
-        return render_template(
-            "materiais/formulario.html",
-            disciplinas=disciplinas,
-            professores=professores,
-            error="O título do material é obrigatório.",
-        )
+    imagefile = request.files.get("imagem_id")
+    new_image = "padrao.png"
 
-    if not desc:
-        return render_template(
-            "materiais/formulario.html",
-            disciplinas=disciplinas,
-            professores=professores,
-            error="A descrição é obrigatória.",
-        )
+    if not titulo or not desc or not disciplina_id or not professor_id:
+        flash("Todos os campos são obrigatórios", "danger")
+        return redirect(url_for("materiais.adicionar"))
 
-    if not disciplina_id:
-        return render_template(
-            "materiais/formulario.html",
-            disciplinas=disciplinas,
-            professores=professores,
-            error="A disciplina é obrigatória.",
-        )
-
-    if not professor_id:
-        return render_template(
-            "materiais/formulario.html",
-            disciplinas=disciplinas,
-            professores=professores,
-            error="O professor é obrigatório.",
-        )
 
     disciplina = db.session.get(Disciplina, disciplina_id)
     professor = db.session.get(Usuario, professor_id)
 
     if not disciplina:
-        return render_template(
-            "materiais/formulario.html",
-            disciplinas=disciplinas,
-            professores=professores,
-            error="Disciplina inválida.",
-        )
+        flash("Disciplina inválida", "danger")
+        return redirect(url_for("materiais.adicionar"))
 
     if not professor or professor.tipo != "PROFESSOR":
-        return render_template(
-            "materiais/formulario.html",
-            disciplinas=disciplinas,
-            professores=professores,
-            error="Professor inválido.",
+        flash("Professor inválido", "danger")
+        return redirect(url_for("materiais.adicionar"))
+
+
+    if imagefile and imagefile.filename:
+        if not arquivo_permitido(imagefile.filename):
+            flash("Extensão de arquivo não permitida. Use PNG, JPG, ou webp.", "danger")
+            return redirect(url_for("materiais.adicionar"))
+
+        # Remove caracteres inválidos do nome do arquivo.
+        safename = secure_filename(imagefile.filename)
+
+        if not safename:
+            flash("Nome de arquivo inválido", "danger")
+            return redirect(url_for("materiais.adicionar"))
+
+        # Usa o mesmo nome no banco e no arquivo físico.
+        new_image = f"imagem_{safename}"
+
+        fullpath = os.path.join(
+            current_app.config["UPLOAD_FOLDER"],
+            new_image,
         )
+
+        imagefile.save(fullpath)
 
     novo_material = Material(
         titulo=titulo,
         desc=desc,
         disciplina=disciplina,
         professor=professor,
+        imagem=new_image,
         arquivo="",
     )
 

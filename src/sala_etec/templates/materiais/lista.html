@@ -92,9 +92,17 @@
 
       <div class="column is-12-tablet is-6-desktop">
         <div class="card material-card">
-          <header class="card-header">
+          <header class="card-header material-card-header">
             <p class="card-header-title">{{ material.titulo }}</p>
           </header>
+
+          <div class="material-card-image">
+            <img
+              src="{{ url_for('static', filename='uploads/' ~ (material.imagem or 'padrao.png')) }}"
+              alt="Imagem de capa do material {{ material.titulo }}"
+              loading="lazy"
+            />
+          </div>
 
           <div class="card-content">
             <div class="content">

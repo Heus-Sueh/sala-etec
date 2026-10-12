@@ -63,6 +63,7 @@ class Material(db.Model):
     titulo = db.Column(db.String(100), nullable=False)
     desc = db.Column(db.String(200), nullable=False)
     arquivo = db.Column(db.String(200), nullable=False)
+    imagem = db.Column(db.String(255), nullable=True, default='padrao.png')
     status = db.Column(db.String(20), nullable=False, default="Publicado")
     criado_em = db.Column(db.DateTime, nullable=False, default=datetime.now)
 

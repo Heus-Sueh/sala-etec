@@ -40,8 +40,16 @@
         <div class="notification is-danger is-light">{{ error }}</div>
         {% endif %}
 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="notification is-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endwith %}
+
         <div class="box">
-          <form action="{{ url_for('materiais.adicionar') }}" method="POST">
+          <form action="{{ url_for('materiais.adicionar') }}" method="POST" enctype="multipart/form-data">
             <!-- Título -->
             <div class="field">
               <label class="label"> Título </label>
@@ -87,6 +95,14 @@
                     {% endfor %}
                   </select>
                 </div>
+              </div>
+            </div>
+
+            <!-- Imagem -->
+            <div class="field">
+              <label class="label" for="imagem_id"> Imagem / Foto: </label>
+              <div class="control">
+                <input type="file" name="imagem_id" accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp" />
               </div>
             </div>
 

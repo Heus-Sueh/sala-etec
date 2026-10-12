@@ -234,6 +234,7 @@ def criar_materiais(banco, web, sistemas, joao, maria, carlos):
         desc="Material introdutório sobre SQL.",
         disciplina=banco,
         professor=joao,
+        imagem="padrao.png",
         arquivo="introducao_sql.pdf",
         criado_em=datetime.now(),
     )
@@ -243,6 +244,7 @@ def criar_materiais(banco, web, sistemas, joao, maria, carlos):
         desc="Introdução aos modelos entidade-relacionamento.",
         disciplina=banco,
         professor=joao,
+        imagem="padrao.png",
         arquivo="modelo_er.pdf",
         criado_em=datetime.now(),
     )
@@ -252,6 +254,7 @@ def criar_materiais(banco, web, sistemas, joao, maria, carlos):
         desc="Primeiros passos com Flask.",
         disciplina=web,
         professor=maria,
+        imagem="padrao.png",
         arquivo="introducao_flask.pdf",
         criado_em=datetime.now(),
     )
@@ -261,6 +264,7 @@ def criar_materiais(banco, web, sistemas, joao, maria, carlos):
         desc="Conceitos de documentação de sistemas.",
         disciplina=sistemas,
         professor=carlos,
+        imagem="padrao.png",
         arquivo="documentacao.pdf",
         criado_em=datetime.now(),
     )

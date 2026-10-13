@@ -34,7 +34,7 @@
 
       <form action="{{ url_for('materiais.listar') }}" method="GET">
         <div class="field">
-          <label class="label" for="busca"> Pesquisa </label>
+          <label class="label" for="busca">Pesquisa</label>
 
           <div class="control has-icons-left">
             <input
@@ -54,7 +54,9 @@
 
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-link" type="submit">Buscar</button>
+            <button class="button is-link" type="submit">
+              Buscar
+            </button>
           </div>
 
           {% if busca %}
@@ -86,16 +88,15 @@
 
     <!-- Lista -->
     {% if materiais %}
-
     <div class="columns is-multiline">
       {% for material in materiais %}
-
       <div class="column is-12-tablet is-6-desktop">
         <div class="card material-card">
           <header class="card-header material-card-header">
             <p class="card-header-title">{{ material.titulo }}</p>
           </header>
 
+          <!-- Imagem do material -->
           <div class="material-card-image">
             <img
               src="{{ url_for('static', filename='uploads/' ~ (material.imagem or 'padrao.png')) }}"
@@ -121,13 +122,11 @@
               {% endif %}
             </div>
 
-            <div
-              class="is-flex is-justify-content-space-between is-align-items-center"
-            >
+            <div class="is-flex is-justify-content-space-between is-align-items-center">
               {% if material.status == "Publicado" %}
-              <span class="tag is-success is-light"> Publicado </span>
+              <span class="tag is-success is-light">Publicado</span>
               {% else %}
-              <span class="tag is-warning is-light"> Arquivado </span>
+              <span class="tag is-warning is-light">Arquivado</span>
               {% endif %}
 
               <small class="has-text-grey">
@@ -136,6 +135,7 @@
             </div>
           </div>
 
+          <!-- Ações -->
           <footer class="card-footer">
             <form
               action="{{ url_for('materiais.alterar_status', material_id=material.id) }}"
@@ -143,41 +143,112 @@
               class="card-footer-item"
             >
               <button class="button is-white" type="submit">
-                {% if material.status == "Publicado" %} Arquivar {% else %}
-                Publicar {% endif %}
+                {% if material.status == "Publicado" %}
+                  Arquivar
+                {% else %}
+                  Publicar
+                {% endif %}
               </button>
             </form>
 
-            <form
-              action="{{ url_for('materiais.excluir', material_id=material.id) }}"
-              method="POST"
-              class="card-footer-item"
-              onsubmit="
-                return confirm(
-                  'Tem certeza que deseja excluir este material?',
-                );
-              "
-            >
-              <button class="button is-danger is-light" type="submit">
+            <div class="card-footer-item">
+              <button
+                class="button is-danger is-light"
+                type="button"
+                data-url="{{ url_for('materiais.excluir', material_id=material.id) }}"
+                data-titulo="{{ material.titulo }}"
+                onclick="abrirModalExclusao(this)"
+              >
                 Excluir
               </button>
-            </form>
+            </div>
           </footer>
         </div>
       </div>
-
       {% endfor %}
     </div>
 
     {% else %}
-
     <div class="notification is-light">
       <p class="title is-5">Nenhum material encontrado</p>
-
       <p>Tente pesquisar por outro termo.</p>
     </div>
-
     {% endif %}
   </div>
 </section>
+
+<!-- Modal de confirmação de exclusão -->
+<div id="modal-exclusao" class="modal">
+  <div
+    class="modal-background"
+    onclick="fecharModalExclusao()"
+  ></div>
+
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Excluir material</p>
+
+      <button
+        class="delete"
+        type="button"
+        aria-label="Fechar"
+        onclick="fecharModalExclusao()"
+      ></button>
+    </header>
+
+    <section class="modal-card-body">
+      <p>Tem certeza de que deseja excluir este material?</p>
+
+      <p
+        id="nome-material-exclusao"
+        class="has-text-weight-semibold mt-3"
+      ></p>
+
+      <p class="has-text-grey mt-2">
+        Essa ação não poderá ser desfeita.
+      </p>
+    </section>
+
+    <footer class="modal-card-foot is-justify-content-flex-end">
+      <button
+        class="button"
+        type="button"
+        onclick="fecharModalExclusao()"
+      >
+        Cancelar
+      </button>
+
+      <form id="form-exclusao" method="POST">
+        <button class="button is-danger" type="submit">
+          Excluir material
+        </button>
+      </form>
+    </footer>
+  </div>
+</div>
+
+<script>
+  function abrirModalExclusao(botao) {
+    const modal = document.getElementById("modal-exclusao");
+    const form = document.getElementById("form-exclusao");
+    const titulo = document.getElementById("nome-material-exclusao");
+
+    form.action = botao.dataset.url;
+    titulo.textContent = botao.dataset.titulo;
+
+    modal.classList.add("is-active");
+  }
+
+  function fecharModalExclusao() {
+    document
+      .getElementById("modal-exclusao")
+      .classList.remove("is-active");
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      fecharModalExclusao();
+    }
+  });
+</script>
 {% endblock %}

@@ -140,7 +140,37 @@ def excluir(material_id):
     if not material:
         return "Material não encontrado", 404
 
-    db.session.delete(material)
-    db.session.commit()
+    # Guarda o nome da imagem antes de excluir o registro.
+    nome_imagem = material.imagem
+
+    try:
+        db.session.delete(material)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        raise
+
+    # Exclui a imagem física, exceto a imagem padrão.
+    if nome_imagem and nome_imagem != "padrao.png":
+        caminho_imagem = os.path.join(
+            current_app.config["UPLOAD_FOLDER"],
+            nome_imagem,
+        )
+
+        if os.path.isfile(caminho_imagem):
+            try:
+                os.remove(caminho_imagem)
+            except OSError:
+                current_app.logger.exception(
+                    "Não foi possível excluir a imagem %s",
+                    nome_imagem,
+                )
+                flash(
+                    "Material excluído, mas não foi possível remover sua imagem.",
+                    "warning",
+                )
+                return redirect(url_for("materiais.listar"))
+
+    flash("Material excluído com sucesso.", "success")
 
     return redirect(url_for("materiais.listar"))
